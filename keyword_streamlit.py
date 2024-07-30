@@ -1,12 +1,17 @@
 import streamlit as st
 import pandas as pd
+import gzip
 
 # Function to read and preprocess the data
 def load_data():
-    df2023 = pd.read_csv('STIP_Survey.csv', sep='|', encoding='utf-8')
-    df2017 = pd.read_csv('STIP_Survey-2017.csv', sep='|', encoding='utf-8')
-    df2019 = pd.read_csv('STIP_Survey-2019.csv', sep='|', encoding='utf-8')
-    df2021 = pd.read_csv('STIP_Survey-2021.csv', sep='|', encoding='utf-8')
+    def read_csv_gzip(file_path):
+        with gzip.open(file_path, 'rt', encoding='utf-8') as f:
+            return pd.read_csv(f, sep='|')
+    
+    df2023 = read_csv_gzip('STIP_Survey.csv.gz')
+    df2017 = read_csv_gzip('STIP_Survey-2017.csv.gz')
+    df2019 = read_csv_gzip('STIP_Survey-2019.csv.gz')
+    df2021 = read_csv_gzip('STIP_Survey-2021.csv.gz')
     
     for df in [df2023, df2017, df2019, df2021]:
         df['InitiativeID_numeric'] = df['InitiativeID'].apply(lambda url: url.split('/')[-1])
