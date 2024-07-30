@@ -80,8 +80,5 @@ if st.button("Filter Data"):
         
         csv = filtered_df.to_csv(index=False, sep='|', encoding='utf-8')
         st.download_button(label="Download CSV", data=csv, file_name=f'STIP_Survey_filtered_{keyword}.csv', mime='text/csv')
-
-        excel = filtered_df.to_excel(index=False)
-        st.download_button(label="Download Excel", data=excel, file_name=f'STIP_Survey_filtered_{keyword}.xlsx', mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
     else:
         st.error("Please enter a keyword to filter policies.")
